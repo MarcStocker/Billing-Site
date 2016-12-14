@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+
+{% block content %}
+
+<div class="large-12 large-centered medium-12 columns">
+  <h2>
+      Payment from <a href="/bills/roommate/{{ roommate.id }}">{{ roommate.name }}</a>
+      {# EDIT button, to edit recipe #}
+      <a role="button" href="/bills/roommate/{{ roommate.id }}/edit" class="warning hollow button"><font size="4">Edit Roommate Comments</font></a>
+  </h2>
+
+  <table>
+    <thead>
+      <tr>
+          <th width="5%"> Amount </th>
+          <th witdh="5%">Type</th>
+          <th width="55%">Details</th>
+          <th width="15%">Date Paid</th>
+          <th width="15%">Total Still Owed</th>
+          {% if user.is_superuser %}
+            <th> Edit </th>
+          {% endif %}
+      </tr>
+    </thead>
+    {% if payments %}
+      {% for item in payments %}
+        <tbody>
+          <tr class="hover">
+            {% if item.roommate == roommate %}
+
+              {% if item.amount %}
+                <td> {{ item.amount }} </td>
+              {% else %}
+                <td> --- </td>
+              {% endif %}
+
+              {% if item.paymenttype %}
+                <td> {{ item.paymenttype }} </td>
+              {% else %}
+                <td> --- </td>
+              {% endif %}
+
+              {% if item.details %}
+                <td> {{ item.details }} </td>
+              {% else %}
+                <td> --- </td>
+              {% endif %}
+
+              {% if item.datepaid %}
+                <td> {{ item.datepaid | date:"M d"}} </td>
+              {% else %}
+                <td> --- </td>
+              {% endif %}
+
+              {% if item.stillowed %}
+                <td> ${{ item.stillowed }} </td>
+              {% else %}
+                <td> --- </td>
+              {% endif %}
+
+              {% if user.is_superuser %}
+                <td>
+                  {# DELETE button that opens a Modal to confirm#}
+                  <a data-open="deleteRecipe" role="button" class="small button alert">DELETE</a>
+                </td>
+              {% endif %}
+
+            {% endif %} {# if item.roommate == roommate #}
+          </tr>
+        </tbody>
+      {% endfor %} {# for items in payments #}
+    {% endif %} {# if Payments #}
+  </table>
+  {# The CONFIRM DELETE Modal #}
+  <div class="reveal" id="deleteRecipe" data-reveal>
+    <h1 class="text-center">WARNING!</h1>
+    <h3 class="text-center">Are you sure you wish to delete:</h3>
+    <h3 class="text-center">{{ bill.category }}</h3>
+    <a role="button" href="/bills/{{ bill.id }}/delete" class="button expanded large alert">DELETE</a>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  {% if roommate.comments %}
+  {% if roommate.comments == "none" %}
+  {% else %}
+      <h2>Comments:</h2>
+      <pre>
+          {{ roommate.comments }}
+      </pre>
+  {% endif %}
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<h1><center>Edgar's Recipes</center></h1>
+<div class="row small-8 medium-8 large-8">
+    <form method="post" action="/bills/search">
+      {% csrf_token %}
+        <input type="text" name="term" size="30" placeholder="Search for a Recipe..."/>
+        <input type="submit" class="button expanded" value="Search" />
+    </form>
+</div>
+<br />
+<div class="row small-up-2 medium-up-3 large-up-4">
+  {% if all_recipes %}
+  {% for item in all_recipes %}
+    <div class="column">
+        <a href="/bills/{{ item.id }}/"><p>{{ item.title }}</p></a>
+        <a href="/bills/{{ item.id }}/"><img class="thumbnail" src="{{ item.image.url }}" alt="" width=270 length=320></a>
+    </div>
+  {% endfor %}
+  {% else %}
+    <h3>You have not uploaded any Recipes yet.</h3>
+    <h3><a href="/bills/submit">Click Here</a> to upload a new recipe</h3>
+  {% endif %}
+</div>
+{% endblock %}

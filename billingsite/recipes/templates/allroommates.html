@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<h1><center>Roommate Payments</center></h1>
+<div class="row small-8 medium-8 large-8">
+    <form method="post" action="/bills/search">
+      {% csrf_token %}
+        <input type="text" name="term" size="30" placeholder="Search for a Roomate/Bill..."/>
+        <input type="submit" class="button expanded" value="Search" />
+    </form>
+</div>
+<div class="row small-up-1 medium-up-2 large-up-2">
+  {% if roommates %}
+  {% for person in roommates %}
+    <div class="column">
+      {% csrf_token %}
+      <h2><a href="/bills/roommate/{{ person.id }}/">Payments for {{ person.name }}</a></h2>
+      <table class="hover">
+        <thead>
+          <tr>
+            <th width="100"> Amount </th>
+            <th witdh="50">Type</th>
+            <th>Details</th>
+            <th width="100">Date Paid</th>
+            <th width="100">Total Still Owed</th>
+          </tr>
+        </thead>
+        {% if payments %}
+        {% for item in payments %}
+        <tbody>
+          <tr class="hover">
+            {% if item.roommate == person %}
+              {% if item.amount %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.amount }}</a></td>
+              {% else %}
+              <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
+              {% endif %}
+              {% if item.paymenttype %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.paymenttype }}</a></td>
+              {% else %}
+              <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
+              {% endif %}
+              {% if item.details %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.details }}</a></td>
+              {% else %}
+              <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
+              {% endif %}
+              {% if item.datepaid %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.datepaid }}</a></td>
+              {% else %}
+              <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
+              {% endif %}
+              {% if item.stillowed %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.stillowed }}</a></td>
+              {% else %}
+              <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
+              {% endif %}
+            {% endif %}
+          </tr>
+        </tbody>
+        {% endfor %}
+        {% endif %}
+          <tr>
+            <td>
+              Total Paid:
+            </td>
+            <td>${{ person.totalpaid }}</td>
+            <td> </td>
+            <td> </td>
+            <td> </td>
+          </tr>
+      </table>
+    </div>
+  {% endfor %}
+  {% else %}
+    <h3>You have not uploaded any Recipes yet.</h3>
+    <h3><a href="/bills/submit">Click Here</a> to upload a new recipe</h3>
+  {% endif %}
+</div>
+{% endblock %}

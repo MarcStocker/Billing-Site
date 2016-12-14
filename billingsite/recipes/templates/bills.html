@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<h1><center>Bills For 720 W. 2nd Ave. Apt A</center></h1>
+<div class="row small-8 medium-8 large-8">
+    <form method="post" action="/bills/search">
+      {% csrf_token %}
+        <input type="text" name="term" size="30" placeholder="Search for a Bill..."/>
+        <input type="submit" class="button expanded" value="Search" />
+    </form>
+</div>
+<br />
+{% if all_bills %}
+<div class="large-8 large-centered">
+<table>
+  <thead>
+    <tr>
+      <th> Bill Category </th>
+      <th width="200"> Price </th>
+      <th width="200"> Per Roomate </th>
+      <th width="300"> Month </th>
+      {% if user.is_superuser %}
+      <th> Edit </th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in all_bills %}
+    <tr>
+      <td><a href="{{ item.id }}"> {{ item.category }} </td></a>
+      <td><a href="{{ item.id }}"> ${{ item.amount }} </td></a>
+      <td><a href="{{ item.id }}"> ${{ item.priceper }} </td></a>
+      <td><a href="{{ item.id }}"> {{ item.date | date:"F" }} </td></a>
+      {% if user.is_superuser %}
+      <td>
+        {# DELETE button that opens a Modal to confirm#}
+        <a data-open="deleteRecipe" role="button" class="small button alert">DELETE</a>
+      </td>
+      {% endif %}
+    </tr>
+    {# The CONFIRM DELETE Modal #}
+    <div class="reveal" id="deleteRecipe" data-reveal>
+      <h1 class="text-center">WARNING!</h1>
+      <h3 class="text-center">Are you sure you wish to delete:</h3>
+      <h3 class="text-center">{{ bill.category }}</h3>
+      <a role="button" href="/bills/{{ item.id }}/deletebill" class="button expanded large alert">DELETE</a>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% else %}
+<h3>You have not uploaded any bills yet.</h3>
+<h3><a href="/bills/submit">Click Here</a> to upload a new bill</h3>
+{% endif %}
+{% endblock %}

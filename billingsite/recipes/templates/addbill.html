@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-8 large-centered columns">
+    <!-- <form method="post" action="/bills/submit"> -->
+    {% if user.is_superuser %}
+                      {# enctype as seen here \/ is required for handling ImageField and FileFields #}
+    <form method="post" action="" enctype="multipart/form-data" runat="server">
+      {% csrf_token %}
+      <div class="row column">
+        <h1 class="text-center">Add a new Bill</h1>
+        {{ form.errors }}
+        <label> {{ form.category.label_tag }}
+          {{ form.category }}
+        </label>
+        <label> {{ form.month.label_tag }}
+          {{ form.month }}
+        </label>
+        <label> {{ form.description.label_tag }}
+          {{ form.description }}
+        </label>
+        <label> {{ form.date.label_tag }} YYYY-MM-DD
+          {{ form.date }}
+        </label>
+        <label> {{ form.image.label_tag }}
+          {{ form.image }}
+        </label>
+        <label> {{ form.amount.label_tag }}
+          {{ form.amount }}
+        </label>
+        <input type="submit" class="button expanded" value="Submit Bill">
+      </div>
+    </form>
+    <form action="/bills/bymonth">
+        <input type="submit" class="button expanded alert" value="Cancel">
+    </form>
+    {% else %}
+    <h1>You must be logged into an admin account to add a recipe... Nice try Bub</h1>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

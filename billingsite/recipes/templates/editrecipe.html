@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-8 large-centered columns">
+    <!-- <form method="post" action="/bills/submit"> -->
+    {% if user.is_superuser %}
+    <form method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row column">
+        <h1 class="text-center">Edit recipe</h1>
+        {{ form.errors }}
+        <h3 class="text-left">Editting: {{ post.title }}</h3>
+        <label> {{ form.title.label_tag }}
+          {{ form.title }}
+        </label>
+        <label> {{ form.description.label_tag }}
+          {{ form.description }}
+        </label>
+        <label> {{ form.ingredients.label_tag }}
+          {{ form.ingredients }}
+        </label>
+        <label> {{ form.recipe.label_tag }}
+          {{ form.recipe }}
+        </label>
+
+        {# had to manually enter form.image information as to add "onchange=" attr for JS preview #}
+        <tr>
+          <th>
+            <div class="large-12 medium-12 medium-centered small-12 small-centered row">
+              <div class="large-6 large-left medium-5 medium-left columns"> <br />
+                <label for="id_image">Current Image: <br />{{ post.image.name }}</label>
+                <img class="" src="{{ post.image.url }}" alt="" width=400 height=400>
+              </div>
+              <div class="large-6 large-right medium-5 medium-right columns"> <br />
+                {# The Preview Image #}
+                <font size="3">
+                  New Image Preview:<br /><br />
+                </font>
+                <img class="" id="output" src="#" alt="Please select an image to upload..." height="400" width="400"/><br /><br />
+              </div>
+            </div>
+          </th>
+            <p>
+              Replace Image:
+            </p>
+          <td>
+            <input id="id_image" name="image" type="file" onchange="loadFile(event)"required />
+          </td>
+        </tr>
+        {# JS to provide an Image Preview when uploading a new image #}
+        <script>
+          var loadFile = function(event) {
+            var output = document.getElementById('output');
+            output.src = URL.createObjectURL(event.target.files[0]);
+          };
+        </script>
+
+        <input type="submit" class="button expanded" value="Confirm Edit">
+      </div>
+    </form>
+        <a role="button" href="/bills/{{ post.id }}" class="button alert expanded">Cancel</a>
+
+    {% else %}
+    <h1>You must be logged into an admin account to edit recipes... Nice try Bub</h1>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

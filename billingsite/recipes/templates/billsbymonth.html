@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<h1><center>Bills For 720 W. 2nd Ave. Apt A</center></h1>
+<div class="row small-8 medium-8 large-8">
+    <form method="post" action="/bills/search">
+      {% csrf_token %}
+        <input type="text" name="term" size="30" placeholder="Search for a Bill..."/>
+        <input type="submit" class="button expanded" value="Search" />
+    </form>
+        <a role="button" href="/bills/submit" class="button success expanded">Add a New Bill</a>
+
+</div>
+<br />
+{% if month_bills %}
+<div class="large-8 large-centered">
+<table>
+  <thead>
+    <tr>
+      <th width="200"> Month </th>
+      <th width="200"> Per Roommate </th>
+      <th> PGE </th>
+      <th> CalWater </th>
+      <th> Comcast </th>
+    </tr>
+  </thead>
+  {# PGE Bill #}
+  {% for item in month_bills %}
+  <tbody>
+    <tr>
+      {% if item.themonth %}
+        <td> {{ item.themonth }} </td>
+        <td> ${{ item.priceperroomate }} </td>
+      {% else %}
+        <td>---</td>
+        <td>---</td>
+      {% endif %}
+      {% if item.pgebill %}
+        <td><a href="/bills/{{ item.pgebill.id }}/"> ${{ item.pgebill.amount }} </td></a>
+      {% else %}
+        <td>---</td>
+      {% endif %}
+      {% if item.calwaterbill %}
+        <td><a href="/bills/{{ item.calwaterbill.id }}/"> ${{ item.calwaterbill.amount }} </td></a>
+      {% else %}
+        <td>---</td>
+      {% endif %}
+      {% if item.comcastbill %}
+        <td><a href="/bills/{{ item.comcastbill.id }}/"> ${{ item.comcastbill.amount }} </td></a>
+      {% else %}
+        <td>---</td>
+      {% endif %}
+  </tbody>
+  {% endfor %}
+</table>
+</div>
+{% else %}
+<h3>You have not uploaded any bills yet.</h3>
+<h3><a href="/bills/submit">Click Here</a> to upload a new bill</h3>
+{% endif %}
+{% endblock %}

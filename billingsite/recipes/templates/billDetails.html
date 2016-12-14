@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+
+{% block content %}
+
+<div class="large-7 large-centered medium-3 columns">
+  {% if user.is_superuser %}
+  <h2>{{ bill.category }} for {{ bill.date | date:'F Y'}}</h2>
+  <br />
+  <div class="large-11 medium-11 small-12 text-center">
+      {# EDIT button, to edit recipe #}
+      <a role="button" href="/bills/{{ bill.id }}/edit" class="button"><font size="4">Edit Bill</font></a>
+      {# DELETE button that opens a Modal to confirm#}
+      <a data-open="deleteRecipe" role="button" class="button alert">DELETE BILL</a>
+      {# The CONFIRM DELETE Modal #}
+      <div class="reveal" id="deleteRecipe" data-reveal>
+        <h1 class="text-center">WARNING!</h1>
+        <h3 class="text-center">Are you sure you wish to delete:</h3>
+        <h3 class="text-center">{{ bill.category }}</h3>
+        <a role="button" href="/bills/{{ bill.id }}/deletebill" class="button expanded large alert">DELETE</a>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  </div>
+  {% else %}
+  {% endif %}
+  {% if bill %}
+  <table>
+    <thead>
+      <tr>
+        <th width="500"> Bill Category </th>
+        <th width="200"> Price </th>
+        <th width="200"> Per Roomate </th>
+        <th width="300"> Month </th>
+        <th width="500"> PDF Download </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td> {{ bill.category }} </td>
+        <td> $ {{ bill.amount }} </td>
+        <td> $ {{ bill.priceper }} </td>
+        <td> <a href="/bills/bymonth/{{ bill.month.id }}">{{ bill.month.themonth }} - {{ bill.month.theyear }}</a></td>
+        <td> <a href="/media/{{ bill.image }}" download="media/{{ bill.image }}">{{ bill.category }} PDF</a> </td>
+      </tr>
+    </tbody>
+  </table>
+  {% else %}
+  <h3>You have not uploaded any bills yet.</h3>
+  <h3><a href="/bills/submit">Click Here</a> to upload a new bill</h3>
+  {% endif %}
+{% endblock %}

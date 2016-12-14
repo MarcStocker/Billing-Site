@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+
+{% block content %}
+
+<div class="large-12 large-centered medium-12 columns">
+  {% if user.is_superuser %}
+  <h2>Payment from <a href="/bills/roommate/{{ item.roommate.id }}">{{ item.name }}</a></h2>
+  <br />
+  <div class="large-11 medium-11 small-12 text-center">
+      {# EDIT button, to edit recipe #}
+      <a role="button" href="/bills/{{ bill.id }}/edit" class="button"><font size="4">Edit Bill</font></a>
+      {# DELETE button that opens a Modal to confirm#}
+      <a data-open="deleteRecipe" role="button" class="button alert">DELETE BILL</a>
+      {# The CONFIRM DELETE Modal #}
+      <div class="reveal" id="deleteRecipe" data-reveal>
+        <h1 class="text-center">WARNING!</h1>
+        <h3 class="text-center">Are you sure you wish to delete</h3>
+        <h3 class="text-center">this payment?</h3>
+        <a role="button" href="/bills/{{ item.id }}/deletepayment" class="button expanded large alert">DELETE</a>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+  </div>
+  {% else %}
+  {% endif %}
+  {% if item %}
+  <table>
+    <thead>
+      <tr>
+          <th width="5%"> Amount </th>
+          <th witdh="5%">Type</th>
+          <th width="55%">Details</th>
+          <th width="15%">Date Paid</th>
+          <th width="15%">Total Still Owed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% if item.amount %}
+        <td> {{ item.amount }} </td>
+        {% else %}
+        <td> --- </td>
+        {% endif %}
+        {% if item.paymenttype %}
+        <td> {{ item.paymenttype }} </td>
+        {% else %}
+        <td> --- </td>
+        {% endif %}
+        {% if item.details %}
+        <td> {{ item.details }} </td>
+        {% else %}
+        <td> --- </td>
+        {% endif %}
+        {% if item.datepaid %}
+        <td> {{ item.datepaid | date:"M d"}} </td>
+        {% else %}
+        <td> --- </td>
+        {% endif %}
+        {% if item.stillowed %}
+        <td> ${{ item.stillowed }} </td>
+        {% else %}
+        <td> --- </td>
+        {% endif %}
+      </tr>
+    </tbody>
+  </table>
+  {% else %}
+  <h3>You have not uploaded any bills yet.</h3>
+  <h3><a href="/bills/submit">Click Here</a> to upload a new bill</h3>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} {{ page_name }} {% endblock title %}
+{% block content %}
+<div class="row">
+  <div class="medium-6 medium-centered large-8 large-centered columns">
+    <!-- <form method="bill" action="/bills/submit"> -->
+    {% if user.is_superuser %}
+    <h1 class="text-center">Edit Roommate Comments</h1>
+    <h3 class="text-left">Editting: {{ roommate.name }}</h3>
+    <form method="post" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="row column">
+        {{ form.errors }}
+        <label> {{ form.name.label_tag }}
+          {{ form.name }}
+        </label>
+        <label> {{ form.comments.label_tag }}
+          {{ form.comments }}
+        </label>
+        <input type="submit" class="button expanded" value="Confirm Edit">
+      </div>
+    </form>
+        <a role="button" href="/bills/roommate/{{ roommate.id }}/" class="button alert expanded">Cancel</a>
+
+    {% else %}
+    <h1>You must be logged into an admin account to edit things... Nice try Bub</h1>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
