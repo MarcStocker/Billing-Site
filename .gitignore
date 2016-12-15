@@ -30,4 +30,6 @@ scripts/
 datadumps/
 screenlog.conf
 
+*.sh
+*.json
 settings.py

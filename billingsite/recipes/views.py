@@ -24,6 +24,7 @@ def index(request):
     }
     return render(request, 'bills.html', context)
 
+@login_required(login_url="/login/")
 def indexbymonth(request):
     month_bills = BillingMonth.objects.all()
     month_bills = month_bills.order_by('-theyear', '-themonthnum')
@@ -55,6 +56,7 @@ def submitBill(request):
     }
     return render(request, 'addbill.html', context)
 
+@login_required(login_url="/login/")
 def viewBill(request, bill_id):
     bill = Bills.objects.get(pk=bill_id)
     month = bill.month
@@ -64,6 +66,7 @@ def viewBill(request, bill_id):
     }
     return render(request, 'billdetails.html', context)
 
+@login_required(login_url="/login/")
 def paymentdetails(request, payment_id):
     item = Payments.objects.get(pk=payment_id)
     context = {
@@ -71,6 +74,7 @@ def paymentdetails(request, payment_id):
     }
     return render(request, 'paymentDetails.html', context)
 
+@login_required(login_url="/login/")
 def userpayments(request, roommate_id):
     roommate = Roommates.objects.get(pk=roommate_id)
     item = Payments.objects.all()
@@ -80,6 +84,7 @@ def userpayments(request, roommate_id):
     }
     return render(request, 'userpayments.html', context)
 
+@login_required(login_url="/login/")
 def deletebill(request, bill_id):
     bill = Bills.objects.get(pk=bill_id)
     month = bill.month.id
@@ -87,6 +92,7 @@ def deletebill(request, bill_id):
     BillingMonth.objects.get(pk=bill.month.id).addbill(instance=0, cat="none")
     return HttpResponseRedirect("/bills/")
 
+@login_required(login_url="/login/")
 def deletepayment(request, payment_id):
     payment = Payments.objects.get(pk=payment_id)
     roommate_id = Payments.objects.get(pk=payment_id).roommate.id
@@ -94,6 +100,7 @@ def deletepayment(request, payment_id):
     Roommates.objects.get(id=roommate_id).update()
     return HttpResponseRedirect("/bills/roommate/%s/" % roommate_id)
 
+@login_required(login_url="/login/")
 def editBill(request, bill_id):
     post = Bills.objects.get(pk=bill_id)
     thefile = post.image
@@ -114,6 +121,7 @@ def editBill(request, bill_id):
     }
     return render(request, 'editbill.html', context)
 
+@login_required(login_url="/login/")
 def editroommate(request, roommate_id):
     roommate = Roommates.objects.get(pk=roommate_id)
     if request.method == "POST":
@@ -149,6 +157,7 @@ def editroommate(request, roommate_id):
 #     }
 #     return render(request, 'editbill.html', context)
 
+@login_required(login_url="/login/")
 def submitPayment(request):
     if request.method == 'POST':
         form = PaymentForm(request.POST);
@@ -165,6 +174,7 @@ def submitPayment(request):
     }
     return render(request, 'addpayment.html', context)
 
+@login_required(login_url="/login/")
 def allroommates(request):
     roommates = Roommates.objects.all()
     payments  = Payments.objects.all().order_by('datepaid')

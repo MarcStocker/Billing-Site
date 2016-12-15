@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <title>{% block title %}{% endblock %} </title>
+
+    <link rel="Page Icon" href="{% static "media/icon2.png" %}" />
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Load CSS -->
+    <link rel="stylesheet" href="{% static "css/foundation.css" %}">
+    <link rel="stylesheet" href="{% static "css/app.css" %}">
+    <!-- Define specific styles for site -->
+    <style>
+        pre{ white-space:pre-wrap; font-family: Verdana; font-size: 20px; }
+        body{ background-color: #555555; }
+        input, input[type="text"], input[type="number"],
+        input[type="password"], input[type="email"],
+        textarea {
+            background-color: #757575;
+        }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header Section -->
+    <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+        <button class="menu-icon" type="button" data-toggle></button>
+        <div class="title-bar-title">
+            Menu
+        </div>
+    </div>
+
+    <div class="fixed">
+        <nav class="top-bar" id="example-menu">
+            <div class ="small-1 top-bar-left">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    {# Home Page Icon/Link #}
+                    <li class="menu-text">
+                        <a href="/home/"> 720 Bills | Home</a>
+                    </li>
+                    {# Link to Bills #}
+                    <li class="menu-text">
+                        <a class="button" disable="True" href="#"><b>Bill Info</b></a>
+                        <ul class="menu vertical">
+                          <li>
+                              <a class="hollow success button" href="/bills">All Bills</a>
+                          </li>
+                          <li>
+                              <a class="hollow success button" href="/bills/bymonth">Billing Month</a>
+                          </li>
+                        </ul>
+                    </li>
+                    {# Link to Roommates #}
+                    <li class="menu-text">
+                        <a class="button" disable="True" href="#"><b>Roommate Info</b></a>
+                        <ul class="menu vertical">
+                          <li>
+                              <a class="hollow success button" href="/bills/allroommates/">All Roommates</a>
+                          </li>
+                          <li>
+                              <a class="hollow success button" href="/bills/allpayments">All Payments</a>
+                          </li>
+                        </ul>
+                    </li>
+                    {% if user.is_superuser %}
+                    <li class="menu-text">
+                        {# Admin Dropdown Box #}
+                        <a class="success button" href="#">Admin Console</a>
+                        <ul class="menu vertical">
+                            <li><a class="success hollow button" href="/bills/submit"><b>Add New Bill</b></a></li>
+                            <li><a class="success hollow button" href="/bills/submitpayment"><b>Add New Payment</b></a></li>
+                            <li><a class="warning hollow button" href="/home/edit">Edit Website Data</a></li>
+                            <li><a class="alert hollow button" href="/admin">Admin Site</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="small-1 top-bar-right">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <!-- Search Bar for top-bar -->
+                    <li>
+                        <form id="searchForm" method="post" action="/bills/search">
+                            {% csrf_token %}
+                            <input type="text" name="term" size="30" placeholder="Search for a Recipe..."/>
+                        </form>
+                    </li>
+                    <li> <input type="submit" class="button expanded" value="Search" form="searchForm"/> </li>
+
+                    <!-- this will display things for only users who are ogged in -->
+                    {% if user.is_authenticated %} <!-- Display Logout -->
+                    <li class="menu-text">
+                        <a href="/logout/"><img src="{% static "media/logouticon-grey.png" %}" width=19 length=19 /> | Logout</a>
+                    </li>
+                    {% else %} <!-- Display Log In -->
+                    <li class="menu-text">
+                        <a href="/login/"><img src="{% static "media/loginicon1-grey.png" %}" width=19 length=19 /> | Log In</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+
+    <!-- Individual App Body Section -->
+    {% block content %}{% endblock %}
+
+
+
+
+    <!-- Footer Section -->
+
+
+    {# Site JS - Must be located at bottom, otherwise will not load #}
+    <script src="{% static "js/vendor/jquery.js" %}"></script>
+    <script src="{% static "js/vendor/what-input.js" %}"></script>
+    <script src="{% static "js/vendor/foundation.js" %}"></script>
+    <script src="{% static "js/app.js" %}"></script>
+  </body>
+</html>
