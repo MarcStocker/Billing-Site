@@ -1,7 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from .models import edgar, Roommates, Payments
+from .models import homeMOTD, Roommates, Payments
+from functools import partial
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 
 class LoginForm(AuthenticationForm):
@@ -32,9 +34,9 @@ class RegisterForm(UserCreationForm):
             user.save()
         return user
 
-class EdgarForm(forms.ModelForm):
+class homeMOTDform(forms.ModelForm):
     class Meta:
-        model = edgar
+        model = homeMOTD
         fields = ['description', 'banner', 'pge_image', 'calwater_image', 'comcast_image']
 
 class RoommatesForm(forms.ModelForm):
@@ -48,6 +50,11 @@ class RoommatesForm(forms.ModelForm):
         fields = ['comments', 'name', 'totalpaid']
 
 class PaymentForm(forms.ModelForm):
+    datepaid = forms.DateField(
+        label="Date Payment was received",
+        help_text="Date Roommate paid",
+        widget=DateInput()
+    )
     class Meta:
         model = Payments
         fields = ['roommate', 'amount', 'paymenttype', 'datepaid', 'description']

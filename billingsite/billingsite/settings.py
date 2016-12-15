@@ -28,9 +28,6 @@ SECRET_KEY = 'cwnkyxrgg!+j!&-a+^oy2qs#!$w*n_to!)bchyzil&zi@abup&'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '50.173.75.36',
-    'rokanishu.dynu.net',
-    'bills.dynu.net'
 ]
 
 # This path is where a user is directed when they first log in
@@ -138,3 +135,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+#### For importing datadumps (manage.py loaddata)
+# import sys
+# if 'loaddata' in sys.argv:
+#     # only change this for loaddata command.
+#     DATABASES['default']['OPTIONS'] = {
+#        "init_command": "SET foreign_key_checks = 0;",
+#     }

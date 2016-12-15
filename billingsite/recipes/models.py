@@ -14,12 +14,13 @@ class Bills(models.Model):
     category = models.CharField(max_length=8, choices=BILL_CHOICES)
     description = models.CharField(max_length=200, null=True, blank=True)
     date = models.DateField(null=True, blank=True)
+    dateissued = models.DateField(null=True, blank=True)
     image = models.FileField(max_length=144, upload_to='uploads/%Y/%m/%d/', null=True, blank=True)
     start_date = models.DateField(blank=True, null=True)
     end_date = models.DateField(blank=True, null=True)
     priceper = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
     amount = models.DecimalField(max_digits=5, decimal_places=2)
-    month = models.ForeignKey('BillingMonth', null=True, blank=True, default="", on_delete=models.SET_DEFAULT)
+    month = models.ForeignKey('BillingMonth', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, db_constraint=False)
 
 
 
@@ -57,9 +58,24 @@ class BillingMonth(models.Model):
     themonthnum = models.IntegerField(default="", null=True, blank=True)
     theyear = models.IntegerField(choices=YEAR_CHOICES, default="")
     priceperroomate = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, default=0)
-    pgebill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thepgebill")
-    calwaterbill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thewaterbill")
-    comcastbill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thecomcastbill")
+    pgebill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thepgebill", db_constraint=False)
+    calwaterbill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thewaterbill", db_constraint=False)
+    comcastbill = models.ForeignKey('Bills', null=True, blank=True, default="", on_delete=models.SET_DEFAULT, related_name="thecomcastbill", db_constraint=False)
+
+    def save(self, *args, **kwargs):
+        if self.themonth == "January": self.themonthnum = 1
+        elif self.themonth == "February": self.themonthnum = 2
+        elif self.themonth == "March": self.themonthnum = 3
+        elif self.themonth == "April": self.themonthnum = 4
+        elif self.themonth == "May": self.themonthnum = 5
+        elif self.themonth == "June": self.themonthnum = 6
+        elif self.themonth == "July": self.themonthnum = 7
+        elif self.themonth == "August": self.themonthnum = 8
+        elif self.themonth == "September": self.themonthnum = 9
+        elif self.themonth == "October": self.themonthnum = 10
+        elif self.themonth == "November": self.themonthnum = 11
+        elif self.themonth == "December": self.themonthnum = 12
+        super(BillingMonth, self).save(*args, **kwargs)
 
     def __str__(self):
         BillingMonth.objects.all().order_by('-theyear').order_by('-themonthnum')
