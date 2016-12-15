@@ -5,7 +5,7 @@
   <head>
     <title>{% block title %}{% endblock %} </title>
 
-    <link rel="Page Icon" href="{% static "media/icon2.png" %}" />
+    <link rel="Page Icon" href="{% static "media/triangleman.png" %}" />
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -39,7 +39,7 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                     {# Home Page Icon/Link #}
                     <li class="menu-text">
-                        <a href="/home/"> 720 Bills | Home</a>
+                        <a href="/home/"><img src="{% static "media/triangleman.png" %}" height=40 width=40 />  720 Bills | Home</a>
                     </li>
                     {# Link to Bills #}
                     <li class="menu-text">
@@ -120,5 +120,16 @@
     <script src="{% static "js/vendor/what-input.js" %}"></script>
     <script src="{% static "js/vendor/foundation.js" %}"></script>
     <script src="{% static "js/app.js" %}"></script>
+
+
+    {# DatePicker code #}
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script>
+    $(document).ready(function() {
+      $('.datepicker').datepicker();
+    });
+    </script>
   </body>
 </html>

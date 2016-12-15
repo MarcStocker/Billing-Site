@@ -1,14 +1,34 @@
 from django import forms
 from .models import Bills, BillingMonth
+from django.forms import ModelForm, DateInput, DateField, extras
+from django.forms.extras.widgets import SelectDateWidget
+import datetime
+from functools import partial
+DateInput = partial(forms.DateInput, {'class': 'datepicker'})
 
 import os
 class RecipeForm(forms.ModelForm):
+    date = forms.DateField(
+        label="Date Due",
+        help_text="Billing Due date",
+        widget=DateInput()
+    )
+    dateissued = forms.DateField(
+        label="Statement Date",
+        help_text="Date the Bill was provided",
+        widget=DateInput()
+    )
+    image = forms.FileField(
+        label="Bill's .PDF or Image File"
+    )
     class Meta:
         model = Bills
         fields = [
             'category','description',
-            'date', 'image','amount','priceper', 'month'
+            'date', 'dateissued', 'image','amount','priceper', 'month'
         ]
+        # widgets = {'date': DateInput(),}
+        # widgets = {'date': SelectDateWidget()}
     def update(self, instance, thefile, commit=True):
         thisrecipe = Bills(pk=instance)
         thisrecipe.category = self.cleaned_data['category']

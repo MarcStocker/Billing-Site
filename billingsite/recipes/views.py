@@ -10,7 +10,7 @@ from django.db.models import Q
 import json as json
 from .forms import RecipeForm, MonthForm
 from .models import Bills, BillingMonth
-from loginapp.models import Payments, Roommates
+from loginapp.models import Payments, Roommates, homeMOTD
 from loginapp.forms import PaymentForm, RoommatesForm
 
 # Create your views here.
@@ -27,11 +27,13 @@ def index(request):
 def indexbymonth(request):
     month_bills = BillingMonth.objects.all()
     month_bills = month_bills.order_by('-theyear', '-themonthnum')
+    web_info    = homeMOTD.objects.get(pk=1)
     all_roommates = Roommates.objects.all()
     context = {
         'sitename':"RoomateBills",
         'page_name':"Bills",
         'month_bills':month_bills,
+        'web_info':web_info,
     }
     return render(request, 'billsbymonth.html', context)
 
@@ -90,7 +92,7 @@ def deletepayment(request, payment_id):
     roommate_id = Payments.objects.get(pk=payment_id).roommate.id
     payment.delete()
     Roommates.objects.get(id=roommate_id).update()
-    return HttpResponseRedirect("/bills/allroommates/")
+    return HttpResponseRedirect("/bills/roommate/%s/" % roommate_id)
 
 def editBill(request, bill_id):
     post = Bills.objects.get(pk=bill_id)

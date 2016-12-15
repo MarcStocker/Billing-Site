@@ -52,11 +52,7 @@
               {% else %}
               <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
               {% endif %}
-              {% if item.stillowed %}
-              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.stillowed }}</a></td>
-              {% else %}
               <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
-              {% endif %}
             {% endif %}
           </tr>
         </tbody>
@@ -69,7 +65,7 @@
             <td>${{ person.totalpaid }}</td>
             <td> </td>
             <td> </td>
-            <td> </td>
+            <td>${{ person.stillowed }} </td>
           </tr>
       </table>
     </div>

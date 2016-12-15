@@ -8,8 +8,11 @@
 <div class="large-12 large-centered medium-12 columns">
   <h2>
       Payment from <a href="/bills/roommate/{{ roommate.id }}">{{ roommate.name }}</a>
-      {# EDIT button, to edit recipe #}
+      {# EDIT button, to edit roommate comments #}
       <a role="button" href="/bills/roommate/{{ roommate.id }}/edit" class="warning hollow button"><font size="4">Edit Roommate Comments</font></a>
+      {% if user.is_superuser %}
+        <a role="button" href="/bills/submitpayment/" class="success hollow button"><font size="4">Add new Payment</font></a>
+      {% endif %}
   </h2>
 
   <table>
@@ -71,19 +74,19 @@
             {% endif %} {# if item.roommate == roommate #}
           </tr>
         </tbody>
+        {# The CONFIRM DELETE Modal #}
+        <div class="reveal" id="deleteRecipe" data-reveal>
+          <h1 class="text-center">WARNING!</h1>
+          <h3 class="text-center">Are you sure you wish to delete:</h3>
+          <h3 class="text-center">{{ item.category }}</h3>
+          <a role="button" href="/bills/{{ item.id }}/deletepayment" class="button expanded large alert">DELETE</a>
+          <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       {% endfor %} {# for items in payments #}
     {% endif %} {# if Payments #}
   </table>
-  {# The CONFIRM DELETE Modal #}
-  <div class="reveal" id="deleteRecipe" data-reveal>
-    <h1 class="text-center">WARNING!</h1>
-    <h3 class="text-center">Are you sure you wish to delete:</h3>
-    <h3 class="text-center">{{ bill.category }}</h3>
-    <a role="button" href="/bills/{{ bill.id }}/delete" class="button expanded large alert">DELETE</a>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
   {% if roommate.comments %}
   {% if roommate.comments == "none" %}
   {% else %}

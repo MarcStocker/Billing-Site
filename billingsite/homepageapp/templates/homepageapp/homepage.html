@@ -12,16 +12,20 @@
     <div class="large-12 medium-12 medium-centered small-12 small-centered row">
       {# Info on left of page #}
         <div class="large-4 large-left medium-5 medium-left columns"> <br />
-            <img src="{{ webinfo.pge_image.url }}" width=350 height=400>
+            <a href="/bills/bymonth/"><img src="{{ webinfo.pge_image.url }}" width=350 height=400></a>
         </div>
       {# Info on left of page #}
         <div class="large-4 large-left medium-5 medium-left columns"> <br />
-            <img src="{{ webinfo.calwater_image.url }}" width=350 height=400>
+            <a href="/bills/bymonth/"><img src="{{ webinfo.calwater_image.url }}" width=350 height=400></a>
         </div>
       {# Info on left of page #}
         <div class="large-4 large-left medium-5 medium-left columns"> <br />
-            <img src="{{ webinfo.comcast_image.url }}" width=350 height=400>
+            <a href="/bills/bymonth/"><img src="{{ webinfo.comcast_image.url }}" width=350 height=400></a>
         </div>
+        <div class="large-12 large-centered medium-12 medium-centered columns"> <br />
+        <br />
+          {{ webinfo.description|linebreaks }}
+
     </div>
 </div>
 
