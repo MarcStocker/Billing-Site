@@ -92,7 +92,7 @@ def deletepayment(request, payment_id):
     roommate_id = Payments.objects.get(pk=payment_id).roommate.id
     payment.delete()
     Roommates.objects.get(id=roommate_id).update()
-    return HttpResponseRedirect("/bills/allroommates/")
+    return HttpResponseRedirect("/bills/roommate/%s/" % roommate_id)
 
 def editBill(request, bill_id):
     post = Bills.objects.get(pk=bill_id)

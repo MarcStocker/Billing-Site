@@ -79,6 +79,7 @@ class Roommates(models.Model):
                     total = total + Payments.objects.get(pk=a).amount
         self.totalpaid = total
         print(self.name + ": total paid = " + str(self.totalpaid))
+        all_roommates = Roommates.objects.all()
         all_bills = Bills.objects.all()
         max_bills = Bills.objects.order_by('-id')[0].id
         max_roommates = Roommates.objects.order_by('-id')[0].id
