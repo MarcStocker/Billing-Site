@@ -15,6 +15,7 @@ from loginapp.forms import PaymentForm, RoommatesForm
 
 # Create your views here.
 
+@login_required(login_url="/login/")
 def index(request):
     all_bills = Bills.objects.all().order_by('-date')
     context = {
