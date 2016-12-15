@@ -25,8 +25,11 @@ migrations/
 *.mp3
 *.wma
 
-*.sh
+*.log
+scripts/
+datadumps/
+screenlog.conf
 
+*.sh
 *.json
 settings.py
-datadumps/
