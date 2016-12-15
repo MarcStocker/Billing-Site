@@ -24,3 +24,9 @@ migrations/
 *.wav
 *.mp3
 *.wma
+
+*.sh
+
+*.json
+settings.py
+datadumps/
