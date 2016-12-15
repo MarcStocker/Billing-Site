@@ -24,3 +24,10 @@ migrations/
 *.wav
 *.mp3
 *.wma
+
+*.log
+scripts/
+datadumps/
+screenlog.conf
+
+settings.py

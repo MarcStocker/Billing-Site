@@ -28,9 +28,9 @@ SECRET_KEY = 'cwnkyxrgg!+j!&-a+^oy2qs#!$w*n_to!)bchyzil&zi@abup&'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '50.173.75.36',
-    'rokanishu.dynu.net',
-    'bills.dynu.net'
+    'bills.dynu.com',
+    'www.bills.dynu.com',
+		'50.173.75.36',
 ]
 
 # This path is where a user is directed when they first log in
