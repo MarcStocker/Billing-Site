@@ -27,10 +27,7 @@ SECRET_KEY = 'cwnkyxrgg!+j!&-a+^oy2qs#!$w*n_to!)bchyzil&zi@abup&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    'bills.dynu.com',
-    'www.bills.dynu.com',
-]
+ALLOWED_HOSTS = [ ]
 
 # This path is where a user is directed when they first log in
 # Maybe I got that wrong, this is where people are redirected if they arent logged in.
