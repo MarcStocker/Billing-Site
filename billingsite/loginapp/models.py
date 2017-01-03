@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+import datetime
 
 from recipes.models import Bills
 
@@ -14,6 +15,16 @@ class homeMOTD(models.Model):
 
     def __str__(self):
         return "Website_Info"
+class Houses(models.Model):
+    housename = models.CharField(max_length=50, default="")
+    datepaid = models.DateField(null=True, blank=True, default=datetime.now)
+    leasestart = models.DateField(null=True, blank=True, default=datetime.now)
+    todaysdate = datetime.now
+    enddate = datetime.strptime(todaysdate, "%m/%d/%y")
+    end_date = enddate + datetime.timedelta(days=365)
+    leaseend   = models.DateField(null=True, blank=True, default=end_date)
+    numtenants = models.IntegerField(max_digits=2, null=True, blank=True, default=0)
+
 class Roommates(models.Model):
     name = models.CharField(max_length=30, default="no name")
     totalpaid = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True, default=0)
