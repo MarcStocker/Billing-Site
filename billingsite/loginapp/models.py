@@ -41,6 +41,7 @@ class Roommates(models.Model):
         all_roommates = Roommates.objects.all()
         all_bills = Bills.objects.all()
         max_bills = Bills.objects.order_by('-id')[0].id
+        max_bills +=2
         max_roommates = Roommates.objects.order_by('-id')[0].id
         max_roommates += 2
         self.totalowed=0
@@ -48,7 +49,7 @@ class Roommates(models.Model):
             if all_roommates.filter(pk=b).exists():
                 cur_roommate = Roommates.objects.get(pk=b)
                 cur_roommate.totalowed = 0
-                for a in range(1, max_bills):
+                for a in range(0, max_bills):
                     if all_bills.filter(pk=a).exists():
                         bill = Bills.objects.get(pk=a)
                         cur_roommate.totalowed += bill.priceper

@@ -13,8 +13,14 @@ from .models import Bills, BillingMonth
 from loginapp.models import Payments, Roommates, homeMOTD
 from loginapp.forms import PaymentForm, RoommatesForm
 
+from . import viewsroommates
 # Create your views here.
 
+# ===========================
+# ======  Display ===========
+# ===========================
+
+# All Bills listed by date submitted
 @login_required(login_url="/login/")
 def index(request):
     all_bills = Bills.objects.all().order_by('-date')
@@ -25,6 +31,7 @@ def index(request):
     }
     return render(request, 'bills.html', context)
 
+# All Bills Organized by Month
 @login_required(login_url="/login/")
 def indexbymonth(request):
     month_bills = BillingMonth.objects.all()
@@ -38,6 +45,21 @@ def indexbymonth(request):
         'web_info':web_info,
     }
     return render(request, 'billsbymonth.html', context)
+
+# Details of a single Bill
+@login_required(login_url="/login/")
+def viewBill(request, bill_id):
+    bill = Bills.objects.get(pk=bill_id)
+    month = bill.month
+    context = {
+        'bill':bill,
+        'month':month,
+    }
+    return render(request, 'billdetails.html', context)
+
+# ===========================
+# ===== Create/Submit  ======
+# ===========================
 
 @login_required(login_url="/login/")
 def submitBill(request):
@@ -57,23 +79,9 @@ def submitBill(request):
     }
     return render(request, 'addbill.html', context)
 
-@login_required(login_url="/login/")
-def viewBill(request, bill_id):
-    bill = Bills.objects.get(pk=bill_id)
-    month = bill.month
-    context = {
-        'bill':bill,
-        'month':month,
-    }
-    return render(request, 'billdetails.html', context)
-
-@login_required(login_url="/login/")
-def deletebill(request, bill_id):
-    bill = Bills.objects.get(pk=bill_id)
-    month = bill.month.id
-    bill.delete()
-    BillingMonth.objects.get(pk=bill.month.id).addbill(instance=0, cat="none")
-    return HttpResponseRedirect("/bills/")
+# ===========================
+# ========  Edit  ===========
+# ===========================
 
 @login_required(login_url="/login/")
 def editBill(request, bill_id):
@@ -95,3 +103,15 @@ def editBill(request, bill_id):
         'form':form,
     }
     return render(request, 'editbill.html', context)
+
+# ===========================
+# ======== Delete ===========
+# ===========================
+
+@login_required(login_url="/login/")
+def deletebill(request, bill_id):
+    bill = Bills.objects.get(pk=bill_id)
+    month = bill.month.id
+    bill.delete()
+    BillingMonth.objects.get(pk=bill.month.id).addbill(instance=0, cat="none")
+    return HttpResponseRedirect("/bills/")

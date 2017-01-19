@@ -42,11 +42,11 @@ class Bills(models.Model):
 class BillingMonth(models.Model):
     class Meta:
         ordering = ('-theyear', '-themonthnum')
-    jan = "January"; feb = "Febrary"; mar = "March"; apr = "April";
+    jan = "January"; feb = "February"; mar = "March"; apr = "April";
     may = "May"; jun = "June"; jul = "July"; aug = "August";
     sept= "September"; octo= "October"; nov = "November"; dec = "December";
     MONTH_CHOICES = (
-        (jan, 'January'), (feb, 'Febrary'), (mar, 'March'),(apr, 'April'), (may, 'May'),
+        (jan, 'January'), (feb, 'February'), (mar, 'March'),(apr, 'April'), (may, 'May'),
         (jun, 'June'), (jul, 'July'), (aug, 'August'), (sept, 'September'),
         (octo, 'October'), (nov, 'November'), (dec, 'December'),
     )
