@@ -5,13 +5,13 @@
 
 {% block content %}
 
-<div class="large-12 large-centered medium-12 columns">
+<div class="large-12 large-centered columns">
   <h2>
       Payment from <a href="/bills/roommate/{{ roommate.id }}">{{ roommate.name }}</a>
       {# EDIT button, to edit roommate comments #}
       <a role="button" href="/bills/roommate/{{ roommate.id }}/edit" class="warning hollow button"><font size="4">Edit Roommate Comments</font></a>
       {% if user.is_superuser %}
-        <a role="button" href="/bills/submitpayment/" class="success hollow button"><font size="4">Add new Payment</font></a>
+        <a role="button" href="/bills/submitpaymentfor/{{ roommate.id }}" class="success hollow button"><font size="4">Add new Payment</font></a>
       {% endif %}
   </h2>
 
@@ -46,8 +46,8 @@
                 <td> --- </td>
               {% endif %}
 
-              {% if item.details %}
-                <td> {{ item.details }} </td>
+              {% if item.description %}
+                <td> {{ item.description }} </td>
               {% else %}
                 <td> --- </td>
               {% endif %}
@@ -67,7 +67,14 @@
               {% if user.is_superuser %}
                 <td>
                   {# DELETE button that opens a Modal to confirm#}
-                  <a data-open="deleteRecipe" role="button" class="small button alert">DELETE</a>
+                  <div class="row">
+                    <div class="columns">
+                      <a data-open="deleterecipe" role="button" class="tiny button alert">delete</a>
+                    </div>
+                    <div class="columns">
+                      <a role="button" href="/bills/roommate/{{ roommate.id }}/editpayment/{{ item.id }}" class="tiny warning hollow button"><font size="4">Edit</font></a>
+                    </div>
+                  </div >
                 </td>
               {% endif %}
 
