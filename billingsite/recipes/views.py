@@ -13,7 +13,6 @@ from .models import Bills, BillingMonth
 from loginapp.models import Payments, Roommates, homeMOTD
 from loginapp.forms import PaymentForm, RoommatesForm
 
-from . import viewsroommates
 # Create your views here.
 
 # ===========================

@@ -35,6 +35,8 @@
         <th width="200"> Price </th>
         <th width="200"> Per Roomate </th>
         <th width="300"> Month </th>
+        <th width="200">Due Date</th>
+        <th width="200">Statement Date</th>
         <th width="500"> PDF Download </th>
       </tr>
     </thead>
@@ -44,6 +46,8 @@
         <td> $ {{ bill.amount }} </td>
         <td> $ {{ bill.priceper }} </td>
         <td> <a href="/bills/bymonth/{{ bill.month.id }}">{{ bill.month.themonth }} - {{ bill.month.theyear }}</a></td>
+        <td> {{ bill.date}} </td>
+        <td> {{ bill.dateissued}} </td>
         <td> <a href="/media/{{ bill.image }}" download="media/{{ bill.image }}">{{ bill.category }} PDF</a> </td>
       </tr>
     </tbody>

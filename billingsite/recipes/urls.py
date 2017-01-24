@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from . import views
-from . import viewsroommates
+from . import viewsRoommates
 
 app_name = "recipes"
 
@@ -35,16 +35,16 @@ urlpatterns = [
 
 
     #<WebSite.com>/bills/
-    url(r'^allroommates/$', viewsroommates.allroommates, name="allroommates"),
+    url(r'^allroommates/$', viewsRoommates.allroommates, name="allroommates"),
 
     #<WebSite.com>/bills/<roommate_id>/edit
-    url(r'^roommate/(?P<roommate_id>[0-9]+)/edit/$', viewsroommates.editroommate, name="editroommate"),
+    url(r'^roommate/(?P<roommate_id>[0-9]+)/edit/$', viewsRoommates.editroommate, name="editroommate"),
 
 
     #<WebSite.com>/bills/roommate/<roommate_id>/
-    url(r'^roommate/(?P<roommate_id>[0-9]+)/$', viewsroommates.userpayments, name="userpayments"),
+    url(r'^roommate/(?P<roommate_id>[0-9]+)/$', viewsRoommates.userpayments, name="userpayments"),
     #<WebSite.com>/bills/roommate/<roommate_id>/editpayment/<payment_id>/
-    url(r'^roommate/(?P<roommate_id>[0-9]+)/editpayment/(?P<payment_id>[0-9]+)/$', viewsroommates.edituserpayments, name="edituserpayments"),
+    url(r'^roommate/(?P<roommate_id>[0-9]+)/editpayment/(?P<payment_id>[0-9]+)/$', viewsRoommates.edituserpayments, name="edituserpayments"),
 
     # ======================
     # ====== Payments ======
@@ -52,15 +52,15 @@ urlpatterns = [
 
     # ~~~~~~~~~~~ Display ~~~~~~~~~~~~
     #<WebSite.com>/bills/
-    url(r'^payments/(?P<payment_id>[0-9]+)/$', viewsroommates.paymentdetails, name="paymentdetails"),
+    url(r'^payments/(?P<payment_id>[0-9]+)/$', viewsRoommates.paymentdetails, name="paymentdetails"),
 
     # ~~~~~~~~~~~~~ Edit/Submit/Delete ~~~~~~~~~~~~~~~~
     #<WebSite.com>/bills/submitpayment/
-    url(r'^submitpayment/$', viewsroommates.submitPayment, name="submitPayment"),
+    url(r'^submitpayment/$', viewsRoommates.submitPayment, name="submitPayment"),
     #<WebSite.com>/bills/submitPaymentFor/
-    url(r'^submitpaymentfor/(?P<roommate_id>[0-9]+)$', viewsroommates.submitPaymentFor, name="submitPaymentFor"),
+    url(r'^submitpaymentfor/(?P<roommate_id>[0-9]+)$', viewsRoommates.submitPaymentFor, name="submitPaymentFor"),
 
     #<WebSite.com>/bills/<bill_id>/delete
-    url(r'^(?P<payment_id>[0-9]+)/deletepayment$', viewsroommates.deletepayment, name="deletepayment"),
+    url(r'^(?P<payment_id>[0-9]+)/deletepayment$', viewsRoommates.deletepayment, name="deletepayment"),
 
 ]
