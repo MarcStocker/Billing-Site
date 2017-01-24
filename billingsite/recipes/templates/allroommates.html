@@ -11,7 +11,58 @@
         <input type="submit" class="button expanded" value="Search" />
     </form>
 </div>
-<div class="row small-up-1 medium-up-2 large-up-2">
+<div class="row small-12 small-centered medium-12 medium-centered large-4 large-centered">
+  <div class="column">
+    <table class="striped">
+      <thead>
+        <tr>
+          <th width="20" id="TOTALS"><b>TOTALS</b></th>
+          <th id="owed"> Owed </th>
+          <th id="paid"> Paid </th>
+          <th id="stillowed"> Left </th>
+        </tr>
+      </thead>
+      {% for person in roommates %}
+      <tbody>
+        <tr id="userTotals">
+          {% if person.name == "Edgar" %}
+            <td id="Edgar"> {{person.name}} </td>
+          {% elif person.name == "Mike" %}
+            <td id="Mike"> {{person.name}} </td>
+          {% elif person.name == "Marc" %}
+            <td id="Marc"> {{person.name}} </td>
+          {% elif person.name == "Erik" %}
+            <td id="Erik"> {{person.name}} </td>
+          {% elif person.name == "John" %}
+            <td id="John"> {{person.name}} </td>
+          {% elif person.name == "Dom" %}
+            <td id="Dom"> {{person.name}} </td>
+          {% else %}
+            <td > --- </td>
+          {% endif %}
+          <td pos="centered" id="owed"> ${{person.totalowed}}</td>
+          <td id="paid"> ${{person.totalpaid}}</td>
+          {% if person.stillowed <= 0 %}
+            <td id="stillowed0"> ${{person.stillowed}}</td>
+          {% elif person.stillowed <= 30 %}
+            <td id="stillowed25"> ${{person.stillowed}}</td>
+          {% elif person.stillowed <= 60 %}
+            <td id="stillowed50"> ${{person.stillowed}}</td>
+          {% elif person.stillowed <= 140 %}
+            <td id="stillowed75"> ${{person.stillowed}}</td>
+          {% elif person.stillowed <= 200 %}
+            <td id="stillowed100"> ${{person.stillowed}}</td>
+          {% elif person.stillowed > 200 %}
+            <td id="stillowed100"> ${{person.stillowed}}</td>
+          {% else %}
+          {% endif %}
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+<div class="row small-up-1 medium-up-1 large-up-2">
   {% if roommates %}
   {% for person in roommates %}
     <div class="column">
@@ -42,8 +93,8 @@
               {% else %}
               <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
               {% endif %}
-              {% if item.details %}
-              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.details }}</a></td>
+              {% if item.description %}
+              <td> <a href="/bills/payments/{{ item.id }}/">{{ item.description }}</a></td>
               {% else %}
               <td><a href="/bills/payments/{{ item.id }}/">---</a></td>
               {% endif %}

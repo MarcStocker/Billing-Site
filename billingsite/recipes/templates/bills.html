@@ -32,7 +32,7 @@
       <td><a href="{{ item.id }}"> {{ item.category }} </td></a>
       <td><a href="{{ item.id }}"> ${{ item.amount }} </td></a>
       <td><a href="{{ item.id }}"> ${{ item.priceper }} </td></a>
-      <td><a href="{{ item.id }}"> {{ item.date | date:"F" }} </td></a>
+      <td><a href="{{ item.id }}"> {{ item.month.themonth }} </td></a>
       {% if user.is_superuser %}
       <td>
         {# DELETE button that opens a Modal to confirm#}

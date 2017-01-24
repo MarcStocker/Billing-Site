@@ -34,6 +34,7 @@ class RecipeForm(forms.ModelForm):
         thisrecipe.category = self.cleaned_data['category']
         thisrecipe.description = self.cleaned_data['description']
         thisrecipe.date = self.cleaned_data['date']
+        thisrecipe.dateissued = self.cleaned_data['dateissued']
         thisrecipe.image = self.cleaned_data['image']
         thisrecipe.amount = self.cleaned_data['amount']
         if self.cleaned_data['month'] != "None":
