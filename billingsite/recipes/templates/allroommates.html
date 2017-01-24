@@ -11,7 +11,7 @@
         <input type="submit" class="button expanded" value="Search" />
     </form>
 </div>
-<div class="row small-12 small-centered medium-12 medium-centered large-4 large-centered">
+<div class="row small-12 small-centered medium-12 medium-centered large-3 large-centered">
   <div class="column">
     <table class="striped">
       <thead>
@@ -35,10 +35,12 @@
             <td id="Erik"> {{person.name}} </td>
           {% elif person.name == "John" %}
             <td id="John"> {{person.name}} </td>
+          {% elif person.name == "Johnny" %}
+            <td id="Johnny"> {{person.name}} </td>
           {% elif person.name == "Dom" %}
             <td id="Dom"> {{person.name}} </td>
           {% else %}
-            <td > --- </td>
+            <td id="Johnny"> {{person.name}} </td>
           {% endif %}
           <td pos="centered" id="owed"> ${{person.totalowed}}</td>
           <td id="paid"> ${{person.totalpaid}}</td>
